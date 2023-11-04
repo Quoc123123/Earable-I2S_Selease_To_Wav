@@ -54,8 +54,11 @@ class PCM2Wav(object):
             except EOFError:
                 generating = False
                 self.data.close()
-            frame = self._calc_frame(channels)
-            wav_file.writeframes(frame)
+            try:
+                frame = self._calc_frame(channels)
+                wav_file.writeframes(frame)
+            except ValueError:
+                pass
         wav_file.close()
 
     def _chr(self, arg):
